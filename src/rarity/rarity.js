@@ -8,5 +8,5 @@ export default function Rarity(props) {
         width: "200%"
     };
 
-    return <Image src={"/rarity" + props.rarityNumber + ".png"} style={aspectStyle} />;
+    return <Image src={"rarity" + props.rarityNumber + ".png"} style={aspectStyle} />;
 }

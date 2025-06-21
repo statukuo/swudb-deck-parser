@@ -7,5 +7,5 @@ export default function Aspect(props) {
         width: "50%"
     };
 
-    return <Image src={"/aspect" + props.aspectNumber + ".png"} style={aspectStyle} />;
+    return <Image src={"aspect" + props.aspectNumber + ".png"} style={aspectStyle} />;
 }
