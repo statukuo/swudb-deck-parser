@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/swudb-deck-parser/static/css/main.8a5e7417.css",
-    "main.js": "/swudb-deck-parser/static/js/main.3738f087.js",
+    "main.js": "/swudb-deck-parser/static/js/main.8b06bdc9.js",
     "static/js/453.5e0024b0.chunk.js": "/swudb-deck-parser/static/js/453.5e0024b0.chunk.js",
     "index.html": "/swudb-deck-parser/index.html",
     "main.8a5e7417.css.map": "/swudb-deck-parser/static/css/main.8a5e7417.css.map",
-    "main.3738f087.js.map": "/swudb-deck-parser/static/js/main.3738f087.js.map",
+    "main.8b06bdc9.js.map": "/swudb-deck-parser/static/js/main.8b06bdc9.js.map",
     "453.5e0024b0.chunk.js.map": "/swudb-deck-parser/static/js/453.5e0024b0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8a5e7417.css",
-    "static/js/main.3738f087.js"
+    "static/js/main.8b06bdc9.js"
   ]
 }
