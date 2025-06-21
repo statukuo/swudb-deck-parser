@@ -8,7 +8,7 @@ export default function DeckSearch(props) {
     return (
         <Form>
             <InputGroup>
-                <Form.Control type="email" placeholder="Paste SWUDB url here" onChange={(t) => setSearchUrl(t.target.value)} />
+                <Form.Control type="search" placeholder="Paste SWUDB url here" onChange={(t) => setSearchUrl(t.target.value)} />
                 <Button variant="outline-secondary" onClick={() => props.searchDeck(searchUrl)}>Load deck</Button>
             </InputGroup>
         </Form>
