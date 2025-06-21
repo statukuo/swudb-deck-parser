@@ -1,34 +1,17 @@
-import { useState } from "react";
-import type { Route } from "./+types/home";
-import DeckSearch from "~/deck_search/deck_search";
+import './App.css';
+import DeckSearch from "./deck_search/deck_search";
 import { Col, Container, Row, Spinner, Stack } from "react-bootstrap";
-import CardPreview from "~/card_preview/card_preview";
-import DeckData from "~/deck_data/deck_data";
-import type { CardProps } from "~/card/card";
+import CardPreview from "./card_preview/card_preview";
+import DeckData from "./deck_data/deck_data";
+import { useState } from 'react';
 
-export function meta({ }: Route.MetaArgs) {
-  return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
-  ];
-}
-
-interface DeckCardJSON {
-  cardName: string
-  title: string
-  defaultCardNumber: string
-  defaultImagePath: string
-  aspects: [number],
-  defaultRarity: number
-}
-
-export default function Home() {
+function App() {
   const [deckData, setDeckData] = useState(undefined);
   const [showCardPreview, setShowCardPreview] = useState(false);
   const [cardPreview, setCardPreview] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  async function searchDeck(url: string) {
+  async function searchDeck(url) {
     setIsLoading(true);
     setDeckData(undefined);
 
@@ -38,7 +21,7 @@ export default function Home() {
     const deckSets = {};
     const sideBoardSets = {};
 
-    data.shuffledDeck.reduce((acc, current: { card: DeckCardJSON, count: number }) => {
+    data.shuffledDeck.reduce((acc, current) => {
       if (current.count > 0) {
         if (!deckSets[current.card.defaultExpansionAbbreviation]) {
           deckSets[current.card.defaultExpansionAbbreviation] = [];
@@ -68,21 +51,23 @@ export default function Home() {
           count: current.count
         });
       }
+
+      return {};
     }, {});
 
     Object.keys(deckSets).forEach(setId => {
-      deckSets[setId].sort((a: CardProps, b: CardProps) => a.defaultCardNumber - b.defaultCardNumber);
+      deckSets[setId].sort((a, b) => a.defaultCardNumber - b.defaultCardNumber);
     });
 
     Object.keys(sideBoardSets).forEach(setId => {
-      sideBoardSets[setId].sort((a: CardProps, b: CardProps) => a.defaultCardNumber - b.defaultCardNumber);
+      sideBoardSets[setId].sort((a, b) => a.defaultCardNumber - b.defaultCardNumber);
     });
 
     setIsLoading(false);
     setDeckData({ ...data, deckSets, sideBoardSets });
   }
 
-  function openPreview(imagePath: string) {
+  function openPreview(imagePath) {
     setCardPreview("https://swudb.com/images" + imagePath.replace("~", ""));
     setShowCardPreview(true);
   }
@@ -114,3 +99,6 @@ export default function Home() {
     </div>
   </main>
 }
+
+
+export default App;

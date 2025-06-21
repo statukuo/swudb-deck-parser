@@ -1,21 +1,9 @@
-import React, { useState, type JSX } from 'react';
-import { Col, Container, Row } from 'react-bootstrap';
-import Aspect from '~/aspect/aspect';
-import Rarity from '~/rarity/rarity';
+import React from 'react';
+import { Col, Row } from 'react-bootstrap';
+import Aspect from '../aspect/aspect';
+import Rarity from '../rarity/rarity';
 
-export interface CardProps {
-    cardName: string
-    defaultCardNumber: number
-    defaultImagePath: string
-    defaultRarity: number
-    aspects: [number]
-    count: number
-    openPreview: (image: string) => void
-    key: number
-    nth: number
-}
-
-export default function Card(props: CardProps): JSX.Element {
+export default function Card(props) {
     const carStyle = {
         color: "white",
         backgroundColor: (props.nth % 2) === 0 ? "#18181b" : "#09090b"

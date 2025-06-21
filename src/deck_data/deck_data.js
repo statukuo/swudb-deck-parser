@@ -1,29 +1,16 @@
-import React, { useState, type JSX, type StyleHTMLAttributes } from 'react';
-import { Container, Row, Stack } from 'react-bootstrap';
-import Card, { type CardProps } from '~/card/card';
+import React from 'react';
+import { Container, Row } from 'react-bootstrap';
+import Card from '../card/card';
 
 
-interface DeckDataProps {
-    deckData?: {
-        leader: CardProps,
-        secondLeader?: CardProps,
-        base: CardProps,
-        deckSets: {},
-        sideBoardSets: {}
-    };
-    openPreview: (image: string) => void
-}
-
-
-
-export default function DeckData(props: DeckDataProps): JSX.Element {
+export default function DeckData(props) {
     if (!props.deckData) {
         return <></>;
     }
     const base = props.deckData.base;
     const leaders = [props.deckData.leader, props.deckData.secondLeader];
 
-    function openCardPreview(imagePath: string) { props.openPreview(imagePath) };
+    function openCardPreview(imagePath) { props.openPreview(imagePath) };
 
 
     const titleStyle = {
@@ -57,7 +44,7 @@ export default function DeckData(props: DeckDataProps): JSX.Element {
             <Row style={titleStyle}>
                 <p className="h4">Leader</p>
             </Row>
-            {leaders.map((leader: CardProps | undefined, idx: number) => {
+            {leaders.map((leader, idx) => {
                 if (!leader) {
                     return <></>
                 }
@@ -80,7 +67,7 @@ export default function DeckData(props: DeckDataProps): JSX.Element {
                     <Row style={titleStyle}>
                         <p className="h4">Deck {setId}</p>
                     </Row>
-                    {setData.map((card: CardProps, idx: number) => {
+                    {setData.map((card, idx) => {
                         return <Card
                             cardName={card.cardName}
                             defaultCardNumber={card.defaultCardNumber}
@@ -101,7 +88,7 @@ export default function DeckData(props: DeckDataProps): JSX.Element {
                     <Row style={titleStyle}>
                         <p className="h4">Sideboard {setId}</p>
                     </Row>
-                    {setData.map((card: CardProps, idx: number) => {
+                    {setData.map((card, idx) => {
                         return <Card
                             cardName={card.cardName}
                             defaultCardNumber={card.defaultCardNumber}

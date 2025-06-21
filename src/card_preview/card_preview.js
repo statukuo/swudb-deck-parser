@@ -1,14 +1,8 @@
 
-import React, { useState, type JSX } from 'react';
-import { Col, Container, Image, Modal, Row } from 'react-bootstrap';
+import React from 'react';
+import { Image, Modal } from 'react-bootstrap';
 
-interface CardPreviewProps {
-    show: boolean
-    setShow: (show: boolean) => void
-    cardImage: string
-}
-
-export default function CardPreview(props: CardPreviewProps): JSX.Element {
+export default function CardPreview(props)  {
     const handleClose = () => props.setShow(false);
 
     return (

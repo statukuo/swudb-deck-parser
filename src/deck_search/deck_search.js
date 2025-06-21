@@ -1,12 +1,8 @@
-import React, { useState, type JSX } from 'react';
+import React, { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 
 
-interface DeckSearchProps {
-    searchDeck: (url: string) => void;
-}
-
-export default function DeckSearch(props: DeckSearchProps): JSX.Element {
+export default function DeckSearch(props) {
     const [searchUrl, setSearchUrl] = useState('');
 
     return (
