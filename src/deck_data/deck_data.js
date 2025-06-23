@@ -3,14 +3,14 @@ import { Container, Row } from 'react-bootstrap';
 import Card from '../card/card';
 
 
-export default function DeckData(props) {
-    if (!props.deckData) {
+export default function DeckData({ deckData, openPreview }) {
+    if (!deckData) {
         return <></>;
     }
-    const base = props.deckData.base;
-    const leaders = [props.deckData.leader, props.deckData.secondLeader];
+    const base = deckData.base;
+    const leaders = [deckData.leader, deckData.secondLeader];
 
-    function openCardPreview(imagePath) { props.openPreview(imagePath) };
+    function openCardPreview(imagePath) { openPreview(imagePath) };
 
 
     const titleStyle = {
@@ -61,8 +61,8 @@ export default function DeckData(props) {
                     nth={idx}
                 ></Card>
             })}
-            {Object.keys(props.deckData.deckSets).map((setId) => {
-                const setData = props.deckData?.deckSets[setId];
+            {Object.keys(deckData.deckSets).map((setId) => {
+                const setData = deckData?.deckSets[setId];
                 return <>
                     <Row style={titleStyle}>
                         <p className="h4">Deck {setId}</p>
@@ -82,8 +82,8 @@ export default function DeckData(props) {
                     })}
                 </>
             })}
-            {Object.keys(props.deckData.sideBoardSets).map((setId) => {
-                const setData = props.deckData?.sideBoardSets[setId];
+            {Object.keys(deckData.sideBoardSets).map((setId) => {
+                const setData = deckData?.sideBoardSets[setId];
                 return <>
                     <Row style={titleStyle}>
                         <p className="h4">Sideboard {setId}</p>
