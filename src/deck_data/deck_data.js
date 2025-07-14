@@ -24,7 +24,6 @@ export default function DeckData({ deckData, openPreview }) {
         fontWeight: "800"
     };
 
-
     return (
         <Container className="p-5">
             <Row style={titleStyle}>
@@ -40,6 +39,7 @@ export default function DeckData({ deckData, openPreview }) {
                 defaultRarity={base.defaultRarity}
                 key={0}
                 nth={0}
+                set={base.defaultExpansionAbbreviation}
             ></Card>
             <Row style={titleStyle}>
                 <p className="h4">Leader</p>
@@ -59,6 +59,7 @@ export default function DeckData({ deckData, openPreview }) {
                     openPreview={openCardPreview}
                     key={idx}
                     nth={idx}
+                    set={leader.defaultExpansionAbbreviation}
                 ></Card>
             })}
             {Object.keys(deckData.deckSets).map((setId) => {
@@ -78,6 +79,7 @@ export default function DeckData({ deckData, openPreview }) {
                             defaultRarity={card.defaultRarity}
                             key={idx}
                             nth={idx}
+                            set={setId}
                         ></Card>
                     })}
                 </>
@@ -99,6 +101,7 @@ export default function DeckData({ deckData, openPreview }) {
                             defaultRarity={card.defaultRarity}
                             key={idx}
                             nth={idx}
+                            set={setId}
                         ></Card>
                     })}
                 </>
