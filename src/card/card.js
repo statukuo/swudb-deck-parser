@@ -8,15 +8,15 @@ export default function Card({ openPreview, defaultImagePath, count, defaultRari
     const target = useRef(null);
     const [show, setShow] = useState(false);
 
-    const collectionCount = useSelector((state) => state.collection.cards.filter(({ Set, CardNumber }) => set === Set && parseInt(defaultCardNumber) === parseInt(CardNumber))[0]?.Count);
+    const collectionCount = useSelector((state) => state.collection.cards.filter(({ Set, CardNumber }) => set === Set && parseInt(defaultCardNumber) === parseInt(CardNumber))[0]?.Count || 0);
 
     const carStyle = {
-        color: "white",
-        backgroundColor: (nth % 2) === 0 ? "#18181b" : "#09090b"
+        color: "black",
+        backgroundColor: (nth % 2) === 0 ? "#C7C9CE" : "#E9EAEC"
     };
 
     return (
-        <Row onClick={() => openPreview(defaultImagePath)} style={carStyle} className="pt-2 pb-2">
+        <Row onClick={() => openPreview(defaultImagePath, count, collectionCount)} style={carStyle} className="pt-2 pb-2">
             <Overlay target={target.current} show={show} placement="right">
                 {({
                     placement: _placement,
@@ -42,11 +42,11 @@ export default function Card({ openPreview, defaultImagePath, count, defaultRari
                 )}
             </Overlay>
 
-            <Col xs="1" style={{ color: collectionCount >= count ? "white" : "red" }} ref={target} onMouseEnter={() => collectionCount < count && setShow(true)} onMouseLeave={() => collectionCount < count && setShow(false)}>{count}x</Col>
-            <Col xs="2"><Rarity rarityNumber={defaultRarity} /></Col>
-            <Col xs="6" className="text-start">{cardName}</Col>
-            <Col xs="2">{aspects.map((aspect, idx) => <Aspect key={idx} aspectNumber={aspect} />)}</Col>
-            <Col xs="1">#{defaultCardNumber}</Col>
+            <Col className="p-0" xs="1" style={{ color: collectionCount >= count ? "black" : "red" }} ref={target} onMouseEnter={() => collectionCount < count && setShow(true)} onMouseLeave={() => collectionCount < count && setShow(false)}>{count}x</Col>
+            <Col className="p-0" xs="1"><Rarity rarityNumber={defaultRarity} /></Col>
+            <Col className="p-0" xs="2">#{defaultCardNumber}</Col>
+            <Col className="p-0 text-start" xs="6">{cardName}</Col>
+            <Col className="p-0" xs="2">{aspects.map((aspect, idx) => <Aspect key={idx} aspectNumber={aspect} />)}</Col>
         </Row>
     );
 }

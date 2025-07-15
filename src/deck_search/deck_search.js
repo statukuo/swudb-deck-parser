@@ -3,7 +3,6 @@ import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { startLoading, stopLoading } from '../store/loadingSlice';
 import { loadDeckData } from '../store/deckSlice';
-import Collection from '../collection/collection';
 
 
 export default function DeckSearch() {
@@ -68,12 +67,15 @@ export default function DeckSearch() {
         dispatch(loadDeckData({ ...data, deckSets, sideBoardSets }));
     }
 
+    const buttonStyle = {
+        width: "25%"
+    }
+
     return (
         <Form>
             <InputGroup>
                 <Form.Control type="search" placeholder="Paste SWUDB url here" onChange={(t) => setSearchUrl(t.target.value)} />
-                <Button variant="outline-secondary" onClick={() => searchDeck(searchUrl)}>Load deck</Button>
-                <Collection />
+                <Button style={buttonStyle} variant="outline-secondary" onClick={() => searchDeck(searchUrl)}>Load deck</Button>
             </InputGroup>
         </Form>
     );

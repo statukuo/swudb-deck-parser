@@ -5,27 +5,40 @@ import CardPreview from "./card_preview/card_preview";
 import DeckData from "./deck_data/deck_data";
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import Collection from './collection/collection';
 
 function App() {
   const [showCardPreview, setShowCardPreview] = useState(false);
   const [cardPreview, setCardPreview] = useState("");
+  const [cardPreviewCount, setCardPreviewCount] = useState(0);
+  const [cardPreviewCollectionCount, setCardPreviewCollectionCount] = useState(0);
 
   const isLoading = useSelector((state) => state.loading.active);
   const deckData = useSelector((state) => state.deck.data);
 
-  function openPreview(imagePath) {
+  function openPreview(imagePath, count, collectionCount) {
     setCardPreview("https://swudb.com/images" + imagePath.replace("~", ""));
+    setCardPreviewCount(count);
+    setCardPreviewCollectionCount(collectionCount);
+
+    console.log(cardPreviewCount, cardPreviewCollectionCount)
+
     setShowCardPreview(true);
   }
 
   return <main className="container-fluid">
     <div className="text-center pt-5">
-      <CardPreview show={showCardPreview} setShow={setShowCardPreview} cardImage={cardPreview} />
+      <CardPreview show={showCardPreview} setShow={setShowCardPreview} cardImage={cardPreview} count={cardPreviewCount} collectionCount={cardPreviewCollectionCount} />
       <Stack gap={3}>
         <Container>
           <Row className="justify-content-lg-center">
             <Col xs lg="8">
               <DeckSearch/>
+            </Col>
+          </Row>
+          <Row className="justify-content-lg-center">
+            <Col xs lg="8">
+              <Collection/>
             </Col>
           </Row>
         </Container>
