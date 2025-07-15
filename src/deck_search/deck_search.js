@@ -49,7 +49,7 @@ export default function DeckSearch() {
                     defaultImagePath: current.card.defaultImagePath,
                     aspects: current.card.aspects,
                     defaultRarity: current.card.defaultRarity,
-                    count: current.count
+                    count: current.sideboardCount
                 });
             }
 

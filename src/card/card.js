@@ -8,15 +8,7 @@ export default function Card({ openPreview, defaultImagePath, count, defaultRari
     const target = useRef(null);
     const [show, setShow] = useState(false);
 
-    const collectionCount = useSelector((state) => {
-        const collectionCount = state.collection.cards.filter(({ Set, CardNumber }) => set === Set && parseInt(defaultCardNumber) === parseInt(CardNumber))[0]?.Count;
-
-        return {
-            color: collectionCount >= count ? "white" : "red",
-            count: collectionCount,
-            enough:  collectionCount >= count
-        };
-    });
+    const collectionCount = useSelector((state) => state.collection.cards.filter(({ Set, CardNumber }) => set === Set && parseInt(defaultCardNumber) === parseInt(CardNumber))[0]?.Count);
 
     const carStyle = {
         color: "white",
@@ -45,15 +37,15 @@ export default function Card({ openPreview, defaultImagePath, count, defaultRari
                             ...props.style,
                         }}
                     >
-                        You have {collectionCount.count} but you need {count}
+                        You have {collectionCount} but you need {count}
                     </div>
                 )}
             </Overlay>
 
-            <Col xs="1" style={{ color: collectionCount.color }} ref={target} onMouseEnter={() => !collectionCount.enough && setShow(true)} onMouseLeave={() => !collectionCount.enough && setShow(false)}>{count}x</Col>
+            <Col xs="1" style={{ color: collectionCount >= count ? "white" : "red" }} ref={target} onMouseEnter={() => collectionCount < count && setShow(true)} onMouseLeave={() => collectionCount < count && setShow(false)}>{count}x</Col>
             <Col xs="2"><Rarity rarityNumber={defaultRarity} /></Col>
             <Col xs="6" className="text-start">{cardName}</Col>
-            <Col xs="2">{aspects.map((aspect) => <Aspect aspectNumber={aspect} />)}</Col>
+            <Col xs="2">{aspects.map((aspect, idx) => <Aspect key={idx} aspectNumber={aspect} />)}</Col>
             <Col xs="1">#{defaultCardNumber}</Col>
         </Row>
     );

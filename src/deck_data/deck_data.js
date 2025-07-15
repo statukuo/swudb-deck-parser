@@ -46,7 +46,7 @@ export default function DeckData({ deckData, openPreview }) {
             </Row>
             {leaders.map((leader, idx) => {
                 if (!leader) {
-                    return <></>
+                    return <div key={idx}></div>
                 }
 
                 return <Card
@@ -62,9 +62,9 @@ export default function DeckData({ deckData, openPreview }) {
                     set={leader.defaultExpansionAbbreviation}
                 ></Card>
             })}
-            {Object.keys(deckData.deckSets).map((setId) => {
+            {Object.keys(deckData.deckSets).map((setId, idx) => {
                 const setData = deckData?.deckSets[setId];
-                return <>
+                return <div key={idx}>
                     <Row style={titleStyle}>
                         <p className="h4">Deck {setId}</p>
                     </Row>
@@ -82,11 +82,11 @@ export default function DeckData({ deckData, openPreview }) {
                             set={setId}
                         ></Card>
                     })}
-                </>
+                </div>
             })}
-            {Object.keys(deckData.sideBoardSets).map((setId) => {
+            {Object.keys(deckData.sideBoardSets).map((setId, idx) => {
                 const setData = deckData?.sideBoardSets[setId];
-                return <>
+                return <div key={idx}>
                     <Row style={titleStyle}>
                         <p className="h4">Sideboard {setId}</p>
                     </Row>
@@ -104,7 +104,7 @@ export default function DeckData({ deckData, openPreview }) {
                             set={setId}
                         ></Card>
                     })}
-                </>
+                </div>
             })}
         </Container>
 
