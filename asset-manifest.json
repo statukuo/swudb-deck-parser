@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/swudb-deck-parser/static/css/main.8a5e7417.css",
-    "main.js": "/swudb-deck-parser/static/js/main.6b155f3c.js",
+    "main.js": "/swudb-deck-parser/static/js/main.873ea465.js",
     "static/js/453.5e0024b0.chunk.js": "/swudb-deck-parser/static/js/453.5e0024b0.chunk.js",
     "static/media/aspect6.png": "/swudb-deck-parser/static/media/aspect6.f7160fe4a1242c853a29.png",
     "static/media/aspect5.png": "/swudb-deck-parser/static/media/aspect5.c94cdc34698bd88d5e6f.png",
@@ -11,11 +11,11 @@
     "static/media/aspect2.png": "/swudb-deck-parser/static/media/aspect2.0768cf9fa2f443b790bb.png",
     "index.html": "/swudb-deck-parser/index.html",
     "main.8a5e7417.css.map": "/swudb-deck-parser/static/css/main.8a5e7417.css.map",
-    "main.6b155f3c.js.map": "/swudb-deck-parser/static/js/main.6b155f3c.js.map",
+    "main.873ea465.js.map": "/swudb-deck-parser/static/js/main.873ea465.js.map",
     "453.5e0024b0.chunk.js.map": "/swudb-deck-parser/static/js/453.5e0024b0.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.8a5e7417.css",
-    "static/js/main.6b155f3c.js"
+    "static/js/main.873ea465.js"
   ]
 }
