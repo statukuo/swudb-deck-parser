@@ -7,7 +7,6 @@ import { useSelector } from 'react-redux';
 export default function Card({ openPreview, defaultImagePath, count, defaultRarity, cardName, aspects, defaultCardNumber, nth, set }) {
     const target = useRef(null);
     const [show, setShow] = useState(false);
-    console.log(set)
 
     const collectionCount = useSelector((state) => state.collection.cards.filter(({ Set, CardNumber }) => set === Set && parseInt(defaultCardNumber) === parseInt(CardNumber))[0]?.Count || 0);
 

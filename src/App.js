@@ -20,9 +20,6 @@ function App() {
     setCardPreview("https://swudb.com/images" + imagePath.replace("~", ""));
     setCardPreviewCount(count);
     setCardPreviewCollectionCount(collectionCount);
-
-    console.log(cardPreviewCount, cardPreviewCollectionCount)
-
     setShowCardPreview(true);
   }
 
