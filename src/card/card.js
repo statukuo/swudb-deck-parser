@@ -4,7 +4,7 @@ import Aspect from '../aspect/aspect';
 import Rarity from '../rarity/rarity';
 import { useSelector } from 'react-redux';
 
-export default function Card({ openPreview, defaultImagePath, count, defaultRarity, cardName, aspects, defaultCardNumber, nth, set }) {
+export default function Card({ openPreview, defaultImagePath, count, defaultRarity, cardName, aspects, defaultCardNumber, nth, set, trilogy, limit }) {
     const target = useRef(null);
     const [show, setShow] = useState(false);
 
@@ -16,7 +16,7 @@ export default function Card({ openPreview, defaultImagePath, count, defaultRari
     };
 
     return (
-        <Row onClick={() => openPreview(defaultImagePath, count, collectionCount)} style={carStyle} className="pt-2 pb-2">
+        <Row onClick={() => openPreview(defaultImagePath, count, trilogy? limit : collectionCount)} style={carStyle} className="pt-2 pb-2">
             <Overlay target={target.current} show={show} placement="right">
                 {({
                     placement: _placement,
@@ -42,7 +42,7 @@ export default function Card({ openPreview, defaultImagePath, count, defaultRari
                 )}
             </Overlay>
 
-            <Col className="p-0" xs="1" style={{ color: collectionCount >= count ? "black" : "red" }} ref={target} onMouseEnter={() => collectionCount < count && setShow(true)} onMouseLeave={() => collectionCount < count && setShow(false)}>{count}x</Col>
+            <Col className="p-0" xs="1" style={{ color: collectionCount >= count || trilogy ? "black" : "red" }} ref={target} onMouseEnter={() => collectionCount < count && setShow(true)} onMouseLeave={() => collectionCount < count && setShow(false)}>{count}x</Col>
             <Col className="p-0" xs="1"><Rarity rarityNumber={defaultRarity} /></Col>
             <Col className="p-0" xs="2">#{defaultCardNumber}</Col>
             <Col className="p-0 text-start" xs="6">{cardName}</Col>

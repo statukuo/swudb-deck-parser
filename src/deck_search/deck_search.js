@@ -2,11 +2,10 @@ import React, { useState } from 'react';
 import { Button, Form, InputGroup } from 'react-bootstrap';
 import { useDispatch } from 'react-redux';
 import { startLoading, stopLoading } from '../store/loadingSlice';
-import { loadDeckData } from '../store/deckSlice';
 import SWUDB from "../data/cardDB.json";
 
 
-export default function DeckSearch() {
+export default function DeckSearch({saveDeckFunction}) {
     const [searchData, setSearchData] = useState('');
 
     const dispatch = useDispatch();
@@ -22,8 +21,7 @@ export default function DeckSearch() {
 
     async function searchDeck(url) {
         dispatch(startLoading());
-        dispatch(loadDeckData(undefined));
-
+        dispatch(saveDeckFunction(undefined));
 
         const response = await fetch("https://cors-anywhere.com/https://swudb.com/api/deck/" + url.split("/").at(-1));
         const data = await response.json();
@@ -74,12 +72,12 @@ export default function DeckSearch() {
         });
 
         dispatch(stopLoading());
-        dispatch(loadDeckData({ ...data, deckSets, sideBoardSets }));
+        dispatch(saveDeckFunction({ ...data, deckSets, sideBoardSets }));
     }
 
     async function loadDeckFromJson(json) {
         dispatch(startLoading());
-        dispatch(loadDeckData(undefined));
+        dispatch(saveDeckFunction(undefined));
 
         const extractDataFromId = (set, number) => {
             const cardData = SWUDB[set][parseInt(number)];
@@ -157,7 +155,7 @@ export default function DeckSearch() {
         }
 
         dispatch(stopLoading());
-        dispatch(loadDeckData({ base, leader, secondLeader, deckSets, sideBoardSets }));
+        dispatch(saveDeckFunction({ base, leader, secondLeader, deckSets, sideBoardSets }));
     }
 
     const buttonStyle = {
