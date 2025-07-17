@@ -17,18 +17,18 @@ root.render(
       <HashRouter>
         <Navbar expand="lg" className="bg-body-tertiary">
           <Container>
-            <Navbar.Brand href="#home">SWUDB Deck Parser</Navbar.Brand>
+            <Navbar.Brand href="#/">SWUDB Deck Parser</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="#/home">Deck builder</Nav.Link>
+                <Nav.Link href="#/">Deck builder</Nav.Link>
                 <Nav.Link href="#/trilogy">Trilogy</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
         <Routes>
-          <Route path="/home" element={<App />} />
+          <Route index element={<App />} />
           <Route path="/trilogy" element={<Trilogy />} />
         </Routes>
       </HashRouter>
