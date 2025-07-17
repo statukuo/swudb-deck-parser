@@ -6,7 +6,7 @@ import Trilogy from './Trilogy';
 import reportWebVitals from './reportWebVitals';
 import store from './store/store'
 import { Provider } from 'react-redux'
-import { BrowserRouter, Route, Routes } from 'react-router';
+import { HashRouter, Route, Routes } from 'react-router';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -14,24 +14,24 @@ root.render(
 
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <HashRouter>
         <Navbar expand="lg" className="bg-body-tertiary">
           <Container>
             <Navbar.Brand href="#home">SWUDB Deck Parser</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
             <Navbar.Collapse id="basic-navbar-nav">
               <Nav className="me-auto">
-                <Nav.Link href="/swudb-deck-parser">Deck builder</Nav.Link>
-                <Nav.Link href="/swudb-deck-parser/trilogy">Trilogy</Nav.Link>
+                <Nav.Link href="#/home">Deck builder</Nav.Link>
+                <Nav.Link href="#/trilogy">Trilogy</Nav.Link>
               </Nav>
             </Navbar.Collapse>
           </Container>
         </Navbar>
         <Routes>
-          <Route path="/swudb-deck-parser" element={<App />} />
-          <Route path="/swudb-deck-parser/trilogy" element={<Trilogy />} />
+          <Route path="/home" element={<App />} />
+          <Route path="/trilogy" element={<Trilogy />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </Provider>
   </React.StrictMode>
 );
