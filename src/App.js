@@ -34,12 +34,11 @@ function App({personal = false}) {
               <DeckSearch saveDeckFunction={loadDeckData}/>
             </Col>
           </Row>
-          {personal &&
           <Row className="justify-content-lg-center">
             <Col xs lg="8">
-              <Collection/>
+              <Collection personal={personal}/>
             </Col>
-          </Row>}
+          </Row>
         </Container>
         <DeckData deckData={deckData} openPreview={openPreview} />
         {isLoading &&

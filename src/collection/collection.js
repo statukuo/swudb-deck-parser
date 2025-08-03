@@ -13,16 +13,28 @@ const COLLECTIONS = {
     ISA_COLLECTION: "https://docs.google.com/spreadsheets/d/e/2PACX-1vTh2Fguu9bSVgrNiAU6z48wLvT9EhlR8Mj5-Bn2If_89gu29m6QpbfQwX2_BIPQZmA4gLW1bpFpRHtW/pub?gid=555896031&single=true&output=csv"
 };
 
-export default function Collection() {
+export default function Collection({ personal }) {
     const collectionCount = useSelector((state) => state.collection.cards.length)
     const dispatch = useDispatch()
     const [user, setUser] = useState("DAVID_COLLECTION");
 
-    async function parseCSVFile() {
+    async function parseCSVGoogleSheet() {
         dispatch(startLoading());
         const response = await fetch(COLLECTIONS[user]);
 
         dispatch(importCollection(CsvToJson(await response.text())))
+
+        dispatch(stopLoading());
+    }
+
+    async function parseCSVFile(file) {
+        dispatch(startLoading());
+
+        console.log("here")
+        console.log(file);
+        console.log(await file.text())
+
+        dispatch(importCollection(CsvToJson(await file.text())))
 
         dispatch(stopLoading());
     }
@@ -34,21 +46,26 @@ export default function Collection() {
 
     return (
         <Form class="pt-2">
-            <InputGroup>
-                <Form.Select aria-label="Default select example" onChange={({ target }) => setUser(target.value)}>
-                    <option value="DAVID_COLLECTION">David</option>
-                    <option value="TANIA_COLLECTION">Tania</option>
-                    <option value="JORGE_COLLECTION">Jorge</option>
-                    <option value="AITOR_COLLECTION">Aitor</option>
-                    <option value="ISA_COLLECTION">Isa</option>
-                </Form.Select>
-                {!!collectionCount &&
-                    <Button style={buttonStyle} variant="outline-secondary" onClick={() => parseCSVFile()}>Unique cards loaded [{collectionCount}]</Button>
-                }
-                {!collectionCount &&
-                    <Button style={buttonStyle} variant="outline-secondary" onClick={() => parseCSVFile()}>Load collection</Button>
-                }
-            </InputGroup>
+            {personal &&
+                <InputGroup>
+                    <Form.Select aria-label="Default select example" onChange={({ target }) => setUser(target.value)}>
+                        <option value="DAVID_COLLECTION">David</option>
+                        <option value="TANIA_COLLECTION">Tania</option>
+                        <option value="JORGE_COLLECTION">Jorge</option>
+                        <option value="AITOR_COLLECTION">Aitor</option>
+                        <option value="ISA_COLLECTION">Isa</option>
+                    </Form.Select>
+                    {!!collectionCount &&
+                        <Button style={buttonStyle} variant="outline-secondary" onClick={() => parseCSVGoogleSheet()}>Unique cards loaded [{collectionCount}]</Button>
+                    }
+                    {!collectionCount &&
+                        <Button style={buttonStyle} variant="outline-secondary" onClick={() => parseCSVGoogleSheet()}>Load collection</Button>
+                    }
+                </InputGroup>
+            }
+            {!personal &&
+                <Form.Control type="file" accept=".csv" onChange={e => parseCSVFile(e.target.files.item(0))} />
+            }
         </Form>
     );
 }
