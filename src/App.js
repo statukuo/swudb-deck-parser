@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import Collection from './collection/collection';
 import { loadDeckData } from './store/deckSlice';
 
-function App() {
+function App({personal = false}) {
   const [showCardPreview, setShowCardPreview] = useState(false);
   const [cardPreview, setCardPreview] = useState("");
   const [cardPreviewCount, setCardPreviewCount] = useState(0);
@@ -34,11 +34,12 @@ function App() {
               <DeckSearch saveDeckFunction={loadDeckData}/>
             </Col>
           </Row>
+          {personal &&
           <Row className="justify-content-lg-center">
             <Col xs lg="8">
               <Collection/>
             </Col>
-          </Row>
+          </Row>}
         </Container>
         <DeckData deckData={deckData} openPreview={openPreview} />
         {isLoading &&

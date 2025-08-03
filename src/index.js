@@ -30,6 +30,7 @@ root.render(
         <Routes>
           <Route index element={<App />} />
           <Route path="/trilogy" element={<Trilogy />} />
+          <Route path="/personal" element={<App personal={true}/>} />
         </Routes>
       </HashRouter>
     </Provider>
