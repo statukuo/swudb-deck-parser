@@ -8,8 +8,6 @@ export const collectionSlice = createSlice({
     reducers: {
         importCollection: (state, action) => {
             state.cards = action.payload
-
-            console.log(state.cards)
         },
     },
 })

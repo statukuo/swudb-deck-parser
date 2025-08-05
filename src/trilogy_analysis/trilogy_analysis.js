@@ -8,7 +8,6 @@ export default function TrilogyAnalysis({ deckData, openPreview }) {
     const totalCardList = [];
 
     const addCardToTotal = (card, limit) => {
-        console.log(card)
         const foundCardIdx = totalCardList.findIndex(({ set, defaultCardNumber }) => card.set === set && card.defaultCardNumber === defaultCardNumber);
 
         if (foundCardIdx < 0) {

@@ -9,8 +9,6 @@ export default function Card({ openPreview, defaultImagePath, count, defaultRari
     const [show, setShow] = useState(false);
     const [alreadyAdded, setAlreadyAdded] = useState(false);
 
-    console.log(set, defaultCardNumber)
-
     const collectionCount = useSelector((state) => state.collection.cards.filter(({ Set, CardNumber }) => set === Set && parseInt(defaultCardNumber) === parseInt(CardNumber))[0]?.Count || 0);
 
     const carStyle = {
