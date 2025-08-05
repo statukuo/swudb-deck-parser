@@ -83,7 +83,7 @@ export default function DeckSearch({saveDeckFunction}) {
             const cardData = SWUDB[set][parseInt(number)];
             return {
                 cardName: cardData.cardName + (cardData.title ? ", " + cardData.title : ""),
-                defaultCardNumber: parseInt(cardData.defaultCardNumber),
+                defaultCardNumber: parseInt(number),
                 defaultImagePath: cardData.defaultImagePath,
                 aspects: cardData.aspects,
                 defaultRarity: cardData.defaultRarity,

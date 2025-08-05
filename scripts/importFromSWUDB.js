@@ -15,7 +15,7 @@ async function importSet() {
         console.log("Started processing ", setsToFetch[setIdx].expansionAbbreviation, setsToFetch[setIdx].cardCount);
         cardIdx = 1;
         while (cardIdx <= setsToFetch[setIdx].cardCount) {
-            const response = await fetch("https://swudb.com/api/card/getVariantInfo", {
+            const response = await fetch("https://swudb.com/api/card/getPrintingInfo", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -30,22 +30,23 @@ async function importSet() {
             const data = await response.json();
 
             if (data.cardId) {
-
-                if (!importedCards[setsToFetch[setIdx].expansionAbbreviation]) {
-                    importedCards[setsToFetch[setIdx].expansionAbbreviation] = {};
+                const set = setsToFetch[setIdx].expansionAbbreviation;
+                if (!importedCards[set]) {
+                    importedCards[set] = {};
                 }
 
-                importedCards[setsToFetch[setIdx].expansionAbbreviation][cardIdx] = {
-                    defaultExpansionAbbreviation: data.alternativeVariants[0].expansionAbbreviation,
+                importedCards[set][cardIdx] = {
+                    defaultExpansionAbbreviation: data.alternativePrintings.find(({expansionAbbreviation}) => expansionAbbreviation === set).expansionAbbreviation,
                     cardName: data.cardName,
                     title: data.title,
-                    defaultCardNumber: data.alternativeVariants[0].cardNumber,
+                    defaultCardNumber: data.alternativePrintings[0].cardNumber,
                     defaultImagePath: data.frontImagePath,
                     aspects: data.aspects,
-                    defaultRarity: data.alternativeVariants[0].rarity
+                    defaultRarity: data.alternativePrintings[0].rarity,
+                    alts: data.alternativePrintings.map(({cardNumber, expansionAbbreviation}) =>({cardNumber, expansionAbbreviation}) )
                 }
 
-                console.log("ADDED ", setsToFetch[setIdx].expansionAbbreviation, cardIdx, data.cardName);
+                console.log("ADDED ", set, cardIdx, data.cardName);
             }
 
             cardIdx++;
