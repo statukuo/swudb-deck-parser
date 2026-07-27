@@ -6,41 +6,56 @@ import DeckData from "./deck_data/deck_data";
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import Collection from './collection/collection';
-import { loadDeckData } from './store/deckSlice';
+import { addDeckData } from './store/deckSlice';
 
-function App({personal = false}) {
+function App({ personal = false }) {
   const [showCardPreview, setShowCardPreview] = useState(false);
   const [cardPreview, setCardPreview] = useState("");
   const [cardPreviewCount, setCardPreviewCount] = useState(0);
   const [cardPreviewCollectionCount, setCardPreviewCollectionCount] = useState(0);
+  const [cardPreviewIsSideboard, setCardPreviewIsSideboard] = useState(false);
+  const [cardPreviewMainDeckCount, setCardPreviewMainDeckCount] = useState(0);
+  const [cardPreviewSideboardCount, setCardPreviewSideboardCount] = useState(0);
 
   const isLoading = useSelector((state) => state.loading.active);
-  const deckData = useSelector((state) => state.deck.data);
+  const decks = useSelector((state) => state.deck.decks || []);
 
-  function openPreview(imagePath, count, collectionCount) {
+  function openPreview(imagePath, count, collectionCount, isSideboard = false, mainDeckCount = 0, sideboardCount = 0) {
     setCardPreview("https://swudb.com/images" + imagePath.replace("~", ""));
     setCardPreviewCount(count);
     setCardPreviewCollectionCount(collectionCount);
+    setCardPreviewIsSideboard(isSideboard);
+    setCardPreviewMainDeckCount(mainDeckCount);
+    setCardPreviewSideboardCount(sideboardCount);
     setShowCardPreview(true);
   }
 
   return <main className="container-fluid">
     <div className="text-center pt-5">
-      <CardPreview show={showCardPreview} setShow={setShowCardPreview} cardImage={cardPreview} count={cardPreviewCount} collectionCount={cardPreviewCollectionCount} />
+      <CardPreview
+        show={showCardPreview}
+        setShow={setShowCardPreview}
+        cardImage={cardPreview}
+        count={cardPreviewCount}
+        collectionCount={cardPreviewCollectionCount}
+        isSideboard={cardPreviewIsSideboard}
+        mainDeckCount={cardPreviewMainDeckCount}
+        sideboardCount={cardPreviewSideboardCount}
+      />
       <Stack gap={3}>
         <Container>
           <Row className="justify-content-lg-center">
             <Col xs lg="8">
-              <DeckSearch saveDeckFunction={loadDeckData}/>
+              <DeckSearch saveDeckFunction={addDeckData} />
             </Col>
           </Row>
           <Row className="justify-content-lg-center">
             <Col xs lg="8">
-              <Collection personal={personal}/>
+              <Collection personal={personal} />
             </Col>
           </Row>
         </Container>
-        <DeckData deckData={deckData} openPreview={openPreview} />
+        <DeckData decks={decks} openPreview={openPreview} />
         {isLoading &&
           <Container>
             <Row className="justify-content-lg-center">
@@ -58,4 +73,6 @@ function App({personal = false}) {
 }
 
 
+
 export default App;
+

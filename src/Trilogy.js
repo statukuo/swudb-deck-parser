@@ -30,17 +30,17 @@ function App() {
         <Container>
           <Row className="justify-content-lg-center">
             <Col xs lg="8">
-              <DeckSearch saveDeckFunction={loadFirstTrilogyData} />
+              <DeckSearch saveDeckFunction={loadFirstTrilogyData} isMultiDeck={false} />
             </Col>
           </Row>
           <Row className="justify-content-lg-center">
             <Col xs lg="8">
-              <DeckSearch saveDeckFunction={loadSecondTrilogyData} />
+              <DeckSearch saveDeckFunction={loadSecondTrilogyData} isMultiDeck={false} />
             </Col>
           </Row>
           <Row className="justify-content-lg-center">
             <Col xs lg="8">
-              <DeckSearch saveDeckFunction={loadThirdTrilogyData} />
+              <DeckSearch saveDeckFunction={loadThirdTrilogyData} isMultiDeck={false} />
             </Col>
           </Row>
         </Container>

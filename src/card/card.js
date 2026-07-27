@@ -4,12 +4,15 @@ import Aspect from '../aspect/aspect';
 import Rarity from '../rarity/rarity';
 import { useSelector } from 'react-redux';
 
-export default function Card({ openPreview, defaultImagePath, count, defaultRarity, cardName, aspects, defaultCardNumber, nth, set, trilogy, limit }) {
+export default function Card({ openPreview, defaultImagePath, count, defaultRarity, cardName, aspects, defaultCardNumber, nth, set, trilogy, limit, deckSources, isSideboard = false, mainDeckCount = 0 }) {
     const target = useRef(null);
     const [show, setShow] = useState(false);
     const [alreadyAdded, setAlreadyAdded] = useState(false);
 
     const collectionCount = useSelector((state) => state.collection.cards.filter(({ Set, CardNumber }) => set === Set && parseInt(defaultCardNumber) === parseInt(CardNumber))[0]?.Count || 0);
+
+    const totalNeeded = isSideboard ? (count + mainDeckCount) : count;
+    const isMissing = collectionCount < totalNeeded;
 
     const carStyle = {
         color: "black",
@@ -17,7 +20,7 @@ export default function Card({ openPreview, defaultImagePath, count, defaultRari
     };
 
     return (
-        <Row style={carStyle} className="pt-2 pb-2">
+        <Row style={carStyle} className="pt-2 pb-2 align-items-center">
             <Overlay target={target.current} show={show} placement="right">
                 {({
                     placement: _placement,
@@ -38,7 +41,11 @@ export default function Card({ openPreview, defaultImagePath, count, defaultRari
                             ...props.style,
                         }}
                     >
-                        You have {collectionCount} but you need {count}
+                        {isSideboard && mainDeckCount > 0 ? (
+                            `You have ${collectionCount} but you need ${totalNeeded} (${mainDeckCount} in main + ${count} in sideboard)`
+                        ) : (
+                            `You have ${collectionCount} but you need ${totalNeeded}`
+                        )}
                     </div>
                 )}
             </Overlay>
@@ -46,11 +53,30 @@ export default function Card({ openPreview, defaultImagePath, count, defaultRari
                 <input class="form-check-input" type="checkbox" value={alreadyAdded} id="flexCheckDefault" onChange={() => setAlreadyAdded(!alreadyAdded)}></input>
             </Col>
 
-            <Col className="p-0" onClick={() => openPreview(defaultImagePath, count, trilogy ? limit : collectionCount)} xs="1" style={{ color: collectionCount >= count || trilogy ? "black" : "red" }} ref={target} onMouseEnter={() => collectionCount < count && setShow(true)} onMouseLeave={() => collectionCount < count && setShow(false)}>{count}x</Col>
-            <Col className="p-0" onClick={() => openPreview(defaultImagePath, count, trilogy ? limit : collectionCount)} xs="1"><Rarity rarityNumber={defaultRarity} /></Col>
-            <Col className="p-0" onClick={() => openPreview(defaultImagePath, count, trilogy ? limit : collectionCount)} xs="2">#{defaultCardNumber}</Col>
-            <Col className="p-0 text-start" onClick={() => openPreview(defaultImagePath, count, trilogy ? limit : collectionCount)} xs="6">{cardName}</Col>
-            <Col className="p-0" onClick={() => openPreview(defaultImagePath, count, trilogy ? limit : collectionCount)} xs="1">{aspects.map((aspect, idx) => <Aspect key={idx} aspectNumber={aspect} />)}</Col>
+            <Col className="p-0" onClick={() => openPreview(defaultImagePath, totalNeeded, trilogy ? limit : collectionCount, isSideboard, mainDeckCount, count)} xs="1" style={{ color: !isMissing || trilogy ? "black" : "red" }} ref={target} onMouseEnter={() => isMissing && !trilogy && setShow(true)} onMouseLeave={() => isMissing && !trilogy && setShow(false)}>
+                {count}x {isSideboard ? `(${mainDeckCount})` : ''}
+            </Col>
+            <Col className="p-0" onClick={() => openPreview(defaultImagePath, totalNeeded, trilogy ? limit : collectionCount, isSideboard, mainDeckCount, count)} xs="1"><Rarity rarityNumber={defaultRarity} /></Col>
+            <Col className="p-0" onClick={() => openPreview(defaultImagePath, totalNeeded, trilogy ? limit : collectionCount, isSideboard, mainDeckCount, count)} xs="1">#{defaultCardNumber}</Col>
+            <Col className="p-0 text-start" onClick={() => openPreview(defaultImagePath, totalNeeded, trilogy ? limit : collectionCount, isSideboard, mainDeckCount, count)} xs="4">{cardName}</Col>
+            <Col className="p-0 text-end d-flex align-items-center justify-content-end flex-wrap gap-1 pe-2" xs="3">
+                {deckSources && deckSources.map((source, idx) => (
+                    <span
+                        key={idx}
+                        className="badge rounded-pill"
+                        style={{
+                            backgroundColor: source.color.bg,
+                            color: source.color.text,
+                            fontSize: '0.72rem',
+                            padding: '3px 8px'
+                        }}
+                        title={`${source.deckLabel}: ${source.count} copies`}
+                    >
+                        {deckSources.length > 1 ? `Deck ${source.deckIndex + 1} (${source.count}x)` : `Deck ${source.deckIndex + 1}`}
+                    </span>
+                ))}
+            </Col>
+            <Col className="p-0" onClick={() => openPreview(defaultImagePath, totalNeeded, trilogy ? limit : collectionCount, isSideboard, mainDeckCount, count)} xs="1">{aspects.map((aspect, idx) => <Aspect key={idx} aspectNumber={aspect} />)}</Col>
         </Row>
     );
 }
