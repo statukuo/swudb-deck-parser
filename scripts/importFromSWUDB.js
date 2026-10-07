@@ -1,7 +1,7 @@
 const fs = require('fs');
 const _ = require("lodash");
 const cards = require("../src/data/cardDB.json");
-const forcedSets = ["LAW"];
+const forcedSets = ["HMW"];
 
 
 async function importSet() {
